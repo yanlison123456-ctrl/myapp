@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -34,6 +33,7 @@
 </head>
 <body>
   <div id="root"></div>
-  <script type="module" src="/index.tsx"></script>
+  <!-- 关键修复：改为 ./index.tsx 且移除 importmap -->
+  <script type="module" src="./index.tsx"></script>
 </body>
 </html>
