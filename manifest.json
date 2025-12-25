@@ -1,0 +1,16 @@
+
+{
+  "short_name": "惠警暖警",
+  "name": "惠警暖警 - 警务智慧服务平台",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/1043/1043432.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "start_url": "/",
+  "display": "standalone",
+  "theme_color": "#1e40af",
+  "background_color": "#ffffff"
+}
