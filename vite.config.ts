@@ -3,15 +3,17 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
-  define: {
-    // 允许在客户端代码中使用 process.env.API_KEY
-    'process.env.API_KEY': JSON.stringify(process.env.API_KEY || "")
-  },
-  server: {
-    host: true
-  },
   build: {
     outDir: 'dist',
-    emptyOutDir: true
+    emptyOutDir: true,
+    rollupOptions: {
+      input: {
+        main: './index.html'
+      }
+    }
+  },
+  // 环境变量处理
+  define: {
+    'process.env.API_KEY': JSON.stringify(process.env.API_KEY)
   }
 });

@@ -70,7 +70,7 @@ const App: React.FC = () => {
       <div className="w-full max-w-md bg-white min-h-screen shadow-2xl flex flex-col relative border-x border-slate-200">
         <header className="bg-blue-800 text-white p-4 sticky top-0 z-30 flex justify-between items-center shadow-lg">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => setCurrentView('home')}>
-            <div className="bg-white p-1 rounded-full text-blue-800 font-bold text-xs">惠</div>
+            <div className="bg-white p-1 rounded-full text-blue-800 font-bold text-xs flex items-center justify-center w-6 h-6">惠</div>
             <span className="text-xl font-bold tracking-wider italic">惠警暖警</span>
           </div>
           {user ? (
@@ -79,7 +79,7 @@ const App: React.FC = () => {
               <button onClick={() => { setUser(null); localStorage.removeItem(AUTH_KEY); setCurrentView('home'); }} className="text-xs bg-red-600 px-2 py-1 rounded">退出</button>
             </div>
           ) : (
-            <button onClick={() => setCurrentView('login')} className="text-xs bg-yellow-500 text-blue-900 px-3 py-1 rounded-full font-bold">后台登录</button>
+            <button onClick={() => setCurrentView('login')} className="text-xs bg-yellow-500 text-blue-900 px-3 py-1 rounded-full font-bold">登录</button>
           )}
         </header>
 
@@ -87,8 +87,8 @@ const App: React.FC = () => {
           {currentView === 'home' && (
             <div className="space-y-4">
               <input 
-                type="text" placeholder="搜索资讯..." 
-                className="w-full p-4 bg-white rounded-2xl border border-slate-200 shadow-sm outline-none"
+                type="text" placeholder="搜索资讯、政策..." 
+                className="w-full p-4 bg-white rounded-2xl border border-slate-200 shadow-sm outline-none focus:ring-2 focus:ring-blue-500"
                 value={searchQuery} onChange={e => setSearchQuery(e.target.value)}
               />
               {filteredNotices.map(n => (
@@ -114,9 +114,10 @@ const App: React.FC = () => {
           {currentView === 'login' && (
             <form onSubmit={handleLogin} className="py-10 space-y-4">
               <h2 className="text-center text-2xl font-bold text-blue-900">管理员登录</h2>
-              <input type="text" placeholder="账号" required className="w-full p-4 border rounded-2xl outline-none" value={loginForm.username} onChange={e => setLoginForm({...loginForm, username: e.target.value})} />
-              <input type="password" placeholder="密码" required className="w-full p-4 border rounded-2xl outline-none" value={loginForm.password} onChange={e => setLoginForm({...loginForm, password: e.target.value})} />
+              <input type="text" placeholder="账号 (admin)" required className="w-full p-4 border rounded-2xl outline-none" value={loginForm.username} onChange={e => setLoginForm({...loginForm, username: e.target.value})} />
+              <input type="password" placeholder="密码 (admin123)" required className="w-full p-4 border rounded-2xl outline-none" value={loginForm.password} onChange={e => setLoginForm({...loginForm, password: e.target.value})} />
               <button type="submit" className="w-full bg-blue-800 text-white p-4 rounded-2xl font-bold shadow-lg">进入系统</button>
+              <button type="button" onClick={() => setCurrentView('home')} className="w-full text-slate-400 text-sm py-2">返回首页</button>
             </form>
           )}
 
@@ -124,13 +125,13 @@ const App: React.FC = () => {
             <div className="space-y-4">
               <div className="flex justify-between items-center">
                 <h2 className="text-xl font-bold">内容管理</h2>
-                <button onClick={() => setCurrentView('create')} className="bg-blue-800 text-white px-4 py-2 rounded-xl text-sm font-bold">发布资讯</button>
+                <button onClick={() => setCurrentView('create')} className="bg-blue-800 text-white px-4 py-2 rounded-xl text-sm font-bold">发布通知</button>
               </div>
               <div className="space-y-2">
                 {notices.map(n => (
                   <div key={n.id} className="flex justify-between items-center p-4 bg-white border rounded-2xl shadow-sm">
-                    <span className="truncate flex-1 font-bold">{n.title}</span>
-                    <button onClick={() => setNotices(notices.filter(item => item.id !== n.id))} className="text-red-500 text-sm ml-2">删除</button>
+                    <span className="truncate flex-1 font-bold text-slate-700">{n.title}</span>
+                    <button onClick={() => setNotices(notices.filter(item => item.id !== n.id))} className="text-red-500 text-sm ml-4 font-bold">删除</button>
                   </div>
                 ))}
               </div>
@@ -139,24 +140,24 @@ const App: React.FC = () => {
 
           {currentView === 'create' && (
             <form onSubmit={handleCreate} className="space-y-4">
-              <button type="button" onClick={() => setCurrentView('admin')} className="text-slate-400 text-sm">← 取消</button>
-              <h2 className="text-xl font-bold text-slate-800">发布新通知</h2>
-              <input type="text" placeholder="标题" required className="w-full p-4 border rounded-2xl outline-none" value={noticeForm.title} onChange={e => setNoticeForm({...noticeForm, title: e.target.value})} />
+              <button type="button" onClick={() => setCurrentView('admin')} className="text-slate-400 text-sm">← 取消发布</button>
+              <h2 className="text-xl font-bold text-slate-800">撰写新通知</h2>
+              <input type="text" placeholder="通知标题" required className="w-full p-4 border rounded-2xl outline-none" value={noticeForm.title} onChange={e => setNoticeForm({...noticeForm, title: e.target.value})} />
               <select className="w-full p-4 border rounded-2xl bg-white outline-none" value={noticeForm.category} onChange={e => setNoticeForm({...noticeForm, category: e.target.value})}>
                 {DEFAULT_CATEGORIES.map(c => <option key={c} value={c}>{c}</option>)}
               </select>
               <div className="relative">
-                <textarea rows={8} placeholder="详情内容..." required className="w-full p-4 border rounded-2xl outline-none" value={noticeForm.content} onChange={e => setNoticeForm({...noticeForm, content: e.target.value})} />
+                <textarea rows={8} placeholder="请输入通知详细内容..." required className="w-full p-4 border rounded-2xl outline-none" value={noticeForm.content} onChange={e => setNoticeForm({...noticeForm, content: e.target.value})} />
                 <button 
                   type="button" 
                   onClick={handlePolish}
                   disabled={isPolishing}
                   className="absolute bottom-4 right-4 bg-indigo-600 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg disabled:opacity-50"
                 >
-                  {isPolishing ? '润色中...' : '✨ AI 润色'}
+                  {isPolishing ? 'AI 处理中...' : '✨ AI 润色'}
                 </button>
               </div>
-              <button type="submit" className="w-full bg-blue-800 text-white p-4 rounded-2xl font-bold">正式发布</button>
+              <button type="submit" className="w-full bg-blue-800 text-white p-4 rounded-2xl font-bold shadow-lg">确认并发布</button>
             </form>
           )}
         </main>

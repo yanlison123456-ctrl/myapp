@@ -11,8 +11,8 @@
     body {
       font-family: 'Inter', 'Noto Sans SC', sans-serif;
       background-color: #f1f5f9;
-      -webkit-tap-highlight-color: transparent;
       margin: 0;
+      -webkit-tap-highlight-color: transparent;
     }
     ::-webkit-scrollbar { display: none; }
   </style>
@@ -31,7 +31,7 @@
 </head>
 <body>
   <div id="root"></div>
-  <!-- 在 Vite 项目中，引用根目录的入口文件必须使用绝对路径 /index.tsx -->
-  <script type="module" src="/index.tsx"></script>
+  <!-- 使用相对路径引用根目录下的入口文件 -->
+  <script type="module" src="./index.tsx"></script>
 </body>
 </html>
