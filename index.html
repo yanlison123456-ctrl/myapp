@@ -15,8 +15,6 @@
       margin: 0;
     }
     ::-webkit-scrollbar { display: none; }
-    .police-blue { color: #1e40af; }
-    .police-bg { background-color: #1e40af; }
   </style>
 <script type="importmap">
 {
@@ -33,7 +31,7 @@
 </head>
 <body>
   <div id="root"></div>
-  <!-- 关键修复：改为 ./index.tsx 且移除 importmap -->
-  <script type="module" src="./index.tsx"></script>
+  <!-- 在 Vite 项目中，引用根目录的入口文件必须使用绝对路径 /index.tsx -->
+  <script type="module" src="/index.tsx"></script>
 </body>
 </html>
